@@ -9,8 +9,16 @@ public class AttackRange : MonoBehaviour
     {
         if (other.CompareTag("Bot"))
         {
-           player.IsAttack = true;
-            player.AttackInterval = 2f;
+            player.IsAttack = true;
+            //player.AttackInterval = 2f;
+            player.currentTarget = other.transform;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Bot"))
+        {
+            player.IsAttack = false;
         }
     }
 }

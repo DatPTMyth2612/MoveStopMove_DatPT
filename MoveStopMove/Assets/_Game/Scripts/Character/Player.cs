@@ -4,43 +4,58 @@ using UnityEngine;
 
 public class Player : Character
 {
-    public CharacterController controller;
-    [SerializeField] private float speed = 5;
-    private FloatingJoystick joystick;
-    private Vector3 direction;
-    private float gravity = -10f;
-
+    private bool isMove;
+    private void Move(Vector3 direction)
+    {
+        // Rotation when move
+        if (Vector3.Distance(direction, Vector3.zero) > 0.01f)
+        {
+            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+            isMove = true;
+            rb.transform.rotation = rotation;
+        }
+        rb.velocity = direction.normalized * speed * Time.deltaTime;
+    }
+    public override void OnInit()
+    {
+        base.OnInit();
+    }
 
     private void Start()
     {
-        joystick = FindObjectOfType<FloatingJoystick>();
+        isMove = false;
     }
     // Update is called once per frame
     void Update()
     {
-        direction = new Vector3(joystick.Direction.x, 0f, joystick.Direction.y).normalized;
-        if (Vector3.Distance(Vector3.zero, direction) > 0.1f)
+        if (joystick != null)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
-            controller.Move(direction * speed * Time.deltaTime);
-            ChangeAnim("run");
+            Move(Vector3.forward * joystick.Vertical + Vector3.right * joystick.Horizontal);
         }
-        else
+        if (isMove)
         {
+            ChangeAnim(ConstString.ANIM_RUN);
+        }
+        if(Vector3.Distance(Vector3.zero, rb.velocity) <= 0)
+        {
+
+            isMove = false;
             if (IsAttack)
             {
-                ChangeAnim("attack");
-                AttackInterval -= Time.deltaTime;
-                if(AttackInterval<=0)
+                ChangeAnim(ConstString.ANIM_ATTACK);
+                transform.LookAt(currentTarget.transform.position);
+                Timer += Time.deltaTime;
+                if (Timer >= TimeToAttack)
                 {
                     IsAttack = false;
-                    ChangeAnim("idle");
+                    Timer = 0;
+                    ChangeAnim(ConstString.ANIM_IDLE);
                 }
             }
             else
             {
-                ChangeAnim("idle");
+                //IsAttack = false;
+                ChangeAnim(ConstString.ANIM_IDLE);
             }
         }
     }

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target;
+    [SerializeField] internal Transform target;
     public float smoothSpeed = 0.125f;
-    public Vector3 offset;
+    [SerializeField] internal Vector3 offset;
+    internal Transform TF;
+    internal Player player;
     private void FixedUpdate()
     {
         Vector3 desiredPos = target.position + offset;
