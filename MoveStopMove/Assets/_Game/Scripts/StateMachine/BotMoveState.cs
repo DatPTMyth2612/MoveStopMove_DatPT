@@ -13,6 +13,11 @@ public class BotMoveState : IState<Bot>
 
     public void OnExcute(Bot bot)
     {
+        if (bot.IsAttack)
+        {
+            bot.navMeshAgent.SetDestination(bot.TF.position);
+            bot.ChangeState(bot.botAttackState);
+        }
         if (bot.navMeshAgent.remainingDistance <= 0.1f)
         {
             bot.ChangeState(bot.botIdleState);
@@ -28,7 +33,7 @@ public class BotMoveState : IState<Bot>
         float radius = 15f;
         Vector2 randomPoint = Random.insideUnitCircle.normalized;
         Vector3 randomPosition = new Vector3(randomPoint.x, 0f, randomPoint.y) * radius;
-        randomPosition += bot.transform.position;
+        randomPosition += bot.TF.position;
         return randomPosition;
     }
 }

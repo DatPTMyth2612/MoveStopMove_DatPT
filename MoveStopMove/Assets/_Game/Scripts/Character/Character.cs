@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class Character : GameUnit
 {
@@ -13,8 +14,10 @@ public class Character : GameUnit
     [SerializeField] internal TargetRing targetRing;
     [SerializeField] internal Transform currentTarget;
 
+
     private string currentAnim;
-    
+
+    public List<Transform> TargetsInRange = new List<Transform>();
     public bool IsAttack;
     public bool IsDead;
     public float Timer = 0f;
@@ -33,6 +36,7 @@ public class Character : GameUnit
 
     public void Attack()
     {
+
     }
 
     public void ChangeAnim(string animName)
@@ -44,7 +48,7 @@ public class Character : GameUnit
             anim.SetTrigger(currentAnim);
         }
     }
-
+   
     public override void OnInit()
     {
         joystick = GameManager.Ins.joystick;

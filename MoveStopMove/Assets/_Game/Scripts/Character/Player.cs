@@ -43,7 +43,7 @@ public class Player : Character
             if (IsAttack)
             {
                 ChangeAnim(ConstString.ANIM_ATTACK);
-                transform.LookAt(currentTarget.transform.position);
+                transform.LookAt(currentTarget.position);
                 Timer += Time.deltaTime;
                 if (Timer >= TimeToAttack)
                 {
