@@ -6,23 +6,31 @@ using UnityEngine.TextCore.Text;
 public class AttackRange : MonoBehaviour
 {
     [SerializeField] private Character character;
+    [SerializeField] private SphereCollider radiusRatio;
+    internal Transform TF;
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Bot"))
+        if (other.CompareTag("Bot")&&!character.IsDead)
         {
-            character.IsAttack = true;
+            character.IsFire = true;
             if (character.TargetsInRange == null||!character.TargetsInRange.Contains(other.transform))
             {
                 character.TargetsInRange.Add(other.transform);
             }
             character.currentTarget = FindNearestEnemy();
+            character.OnSelect();
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Bot"))
         {
-            character.IsAttack = false;
+            character.IsFire = false;
+            character.OnDeSelect();
+        }
+        if (other.CompareTag("Weapon"))
+        {
+            other.GetComponent<Weapon>().OnDespawn();
         }
     }
     public Transform FindNearestEnemy()
@@ -44,5 +52,8 @@ public class AttackRange : MonoBehaviour
     {
         return Vector3.Distance(character.TF.position, targetPosition);
     }
-
+    public float GetAttackRadius()
+    {
+        return radiusRatio.radius * TF.localScale.x;
+    }
 }

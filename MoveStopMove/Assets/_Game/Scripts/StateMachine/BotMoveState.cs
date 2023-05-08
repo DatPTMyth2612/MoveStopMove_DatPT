@@ -13,7 +13,7 @@ public class BotMoveState : IState<Bot>
 
     public void OnExcute(Bot bot)
     {
-        if (bot.IsAttack)
+        if (bot.IsFire)
         {
             bot.navMeshAgent.SetDestination(bot.TF.position);
             bot.ChangeState(bot.botAttackState);

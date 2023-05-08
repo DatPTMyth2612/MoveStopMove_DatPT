@@ -9,14 +9,18 @@ public class Bot : Character
     public BotIdleState botIdleState = new BotIdleState();
     public BotMoveState botMoveState = new BotMoveState();
     public BotAttackState botAttackState = new BotAttackState();
-    public NavMeshAgent navMeshAgent;
-    
-    
+    internal NavMeshAgent navMeshAgent;
+
+    public override void OnInit()
+    {
+        base.OnInit();
+        navMeshAgent= GetComponent<NavMeshAgent>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        OnInit();
         currentState = botIdleState;
         currentState.OnEnter(this);
     }
@@ -24,7 +28,23 @@ public class Bot : Character
     // Update is called once per frame
     void Update()
     {
+        if (isCoolDownAttack)
+        {
+            delayAttack -= Time.deltaTime;
+        }
         currentState.OnExcute(this);
+        if(IsDead)
+        {
+            ChangeAnim(ConstString.ANIM_DEAD);
+            navMeshAgent.SetDestination(TF.position);   
+            countDownDie -=Time.deltaTime;
+            if(countDownDie <= 0.1f)
+            {
+                OnDespawn();
+                navMeshAgent.enabled = false;
+            }
+        }
+        
     }
     public void ChangeState(IState<Bot> newState)
     {

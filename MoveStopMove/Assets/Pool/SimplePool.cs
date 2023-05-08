@@ -328,5 +328,5 @@ public enum IngameType
 public enum PoolType
 {
     Bot,
-    Brick,
+    Knife_Bullet,
 }

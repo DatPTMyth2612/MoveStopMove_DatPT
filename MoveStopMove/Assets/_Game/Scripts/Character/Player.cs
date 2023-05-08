@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private bool isMove;
     private void Move(Vector3 direction)
     {
         // Rotation when move
         if (Vector3.Distance(direction, Vector3.zero) > 0.01f)
         {
             Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
-            isMove = true;
             rb.transform.rotation = rotation;
         }
-        rb.velocity = direction.normalized * speed * Time.deltaTime;
+        rb.velocity = direction.normalized * speed;
     }
     public override void OnInit()
     {
@@ -23,7 +21,7 @@ public class Player : Character
 
     private void Start()
     {
-        isMove = false;
+
     }
     // Update is called once per frame
     void Update()
@@ -32,31 +30,44 @@ public class Player : Character
         {
             Move(Vector3.forward * joystick.Vertical + Vector3.right * joystick.Horizontal);
         }
-        if (isMove)
+        if(isCoolDownAttack)
         {
-            ChangeAnim(ConstString.ANIM_RUN);
+            delayAttack -= Time.deltaTime;
         }
         if(Vector3.Distance(Vector3.zero, rb.velocity) <= 0)
         {
-
-            isMove = false;
-            if (IsAttack)
+            if (currentTarget != null)
             {
-                ChangeAnim(ConstString.ANIM_ATTACK);
-                transform.LookAt(currentTarget.position);
-                Timer += Time.deltaTime;
-                if (Timer >= TimeToAttack)
+                if (IsFire)
                 {
-                    IsAttack = false;
-                    Timer = 0;
+                    IsFire = false;
+                    if(delayAttack <= 0)
+                    {
+                        RotationToTarget();
+                        Attack();
+                    }
+                }
+                else
+                {
                     ChangeAnim(ConstString.ANIM_IDLE);
                 }
             }
             else
-            {
-                //IsAttack = false;
                 ChangeAnim(ConstString.ANIM_IDLE);
+        }
+        else
+        {
+            ChangeAnim(ConstString.ANIM_RUN);
+        }
+        if(IsDead)
+        {
+            ChangeAnim(ConstString.ANIM_DEAD);
+            countDownDie -=Time.deltaTime;
+            if (countDownDie <= 0.1f)
+            {
+                OnDespawn();
             }
         }
     }
+    
 }

@@ -7,17 +7,20 @@ public class BotAttackState : IState<Bot>
 {
     public void OnEnter(Bot bot)
     {
-        bot.Timer = 0;
-        bot.ChangeAnim(ConstString.ANIM_ATTACK);
-        bot.transform.LookAt(bot.currentTarget.transform.position);
+        if (bot.currentTarget != null)
+        {
+            if (bot.delayAttack <= 0.01f)
+            {
+                bot.RotationToTarget();
+                bot.Attack();
+            }
+        }
     }
 
     public void OnExcute(Bot bot)
     {
-        bot.Timer += Time.deltaTime;
-        if (bot.Timer >= bot.TimeToAttack)
+        if (bot.isAttackAnimEnd)
         {
-            bot.Timer = 0;
             bot.ChangeState(bot.botIdleState);
         }
     }

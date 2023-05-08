@@ -15,15 +15,14 @@ public class BotIdleState : IState<Bot>
 
     public void OnExcute(Bot bot)
     {
-           changeStateTimer += Time.deltaTime;
-            if (changeStateTimer >= timeEnd)
-            {
-                bot.ChangeState(bot.botMoveState);
-            }
+        changeStateTimer += Time.deltaTime;
+        if (changeStateTimer >= timeEnd)
+        {
+            bot.ChangeState(bot.botMoveState);
+        }
     }
     public void OnExit(Bot bot)
     {
 
     }
-   
 }
