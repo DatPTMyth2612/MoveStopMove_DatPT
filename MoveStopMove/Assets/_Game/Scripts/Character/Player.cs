@@ -27,9 +27,23 @@ public class Player : Character
     {
         currentWeaponIndex = PlayerPrefs.GetInt("Selected Weapon", 0);
         weaponBullet = WeaponConfig.Ins.weapon[currentWeaponIndex].weapon;
-        onHand = Instantiate(WeaponConfig.Ins.weapon[currentWeaponIndex].weaponPrefab, hand);
+        CreateWeapon(currentWeaponIndex);
         pant.GetComponent<SkinnedMeshRenderer>().material = PantsConfig.Ins.pant[0].pantMaterial;
     }
+
+    public void CreateWeapon(int weaponIndex)
+    {
+        if (onHand != null)
+        {
+            Destroy(onHand);
+            onHand = Instantiate(WeaponConfig.Ins.weapon[weaponIndex].weaponPrefab, hand);
+        }
+        else
+        {
+            onHand = Instantiate(WeaponConfig.Ins.weapon[weaponIndex].weaponPrefab, hand);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {

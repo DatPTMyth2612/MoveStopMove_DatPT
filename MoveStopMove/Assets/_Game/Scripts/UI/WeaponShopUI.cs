@@ -13,6 +13,7 @@ public class WeaponShopUI : UICanvas
     [SerializeField] private Text weaponDescription;
     [SerializeField] private Transform weaponContainer;
     [SerializeField] private GameObject gamePlay;
+    [SerializeField] private Player player;
     //[SerializeField] private GameObject weaponUI;
     void Start()
     {
@@ -24,6 +25,7 @@ public class WeaponShopUI : UICanvas
             weaponModels.Add(weaponModel);
         }
         UpdateWeaponUI();
+        player = FindFirstObjectByType<Player>();    
     }
     public void ChangeWeaponPrevious()
     {
@@ -42,6 +44,7 @@ public class WeaponShopUI : UICanvas
     public void BuyButton()
     {
         PlayerPrefs.SetInt("Selected Weapon", currentWeaponIndex);
+        player.CreateWeapon(currentWeaponIndex);
     }
     public void CloseButton()
     {
