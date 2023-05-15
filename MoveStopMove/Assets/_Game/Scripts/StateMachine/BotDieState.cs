@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class BotDieState : MonoBehaviour
+public class BotDieState : IState<Bot>
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnEnter(Bot bot)
     {
-        
+        bot.ChangeAnim(ConstString.ANIM_DEAD);
+        bot.navMeshAgent.isStopped = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnExecute(Bot bot)
     {
-        
+        bot.countDownDie -= Time.deltaTime;
+        if (bot.countDownDie <= 0.1f)
+        {
+            bot.OnDespawn();
+            bot.navMeshAgent.enabled = false;
+        }
+    }
+
+    public void OnExit(Bot bot)
+    {
+
     }
 }

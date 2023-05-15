@@ -4,47 +4,27 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum GameState { MainMenu, Gameplay, Pause }
+
 public class GameManager : Singleton<GameManager>
 {
-    //[SerializeField] UserData userData;
-    //[SerializeField] CSVData csv;
-    //private static GameState gameState = GameState.MainMenu;
-     
     [SerializeField] internal FloatingJoystick joystick;
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private Camera mainCamera;
+    private GameState gameState;
 
-
-    protected void Awake()
+    private void Start()
     {
-        //base.Awake();
-        Input.multiTouchEnabled = false;
-        Application.targetFrameRate = 60;
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
-
-        int maxScreenHeight = 1280;
-        float ratio = (float)Screen.currentResolution.width / (float)Screen.currentResolution.height;
-        if (Screen.currentResolution.height > maxScreenHeight)
-        {
-            Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true);
-        }
-
-        //csv.OnInit();
-        //userData?.OnInitData();
-
-        //ChangeState(GameState.MainMenu);
-
-
+        ChangeState(GameState.MainMenu);
     }
 
-    //public static void ChangeState(GameState state)
-    //{
-    //    gameState = state;
-    //}
+    public void ChangeState(GameState gameState)
+    {
+        this.gameState = gameState;
+    }
 
-    //public static bool IsState(GameState state)
-    //{
-    //    return gameState == state;
-    //}
-  
+    public bool IsState(GameState gameState)
+    {
+        return this.gameState == gameState;
+    }
 }

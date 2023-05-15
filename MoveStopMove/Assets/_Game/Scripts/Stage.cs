@@ -17,10 +17,7 @@ public class Stage : MonoBehaviour
     }
     public void OnInit()
     {
-        if (IsCanSpawnBot())
-        {
-            SpawnBot(maxBot);
-        }
+        SpawnBot(maxBot);
     }
     public Vector3 RandomPointInStage()
     {
@@ -74,10 +71,10 @@ public class Stage : MonoBehaviour
             Bot bot = SimplePool.Spawn<Bot>(LevelManager.Ins.botPrefab, pointToSpawn, Quaternion.identity);
             bot.OnInit();
         }
-        
     }
     public bool IsCanSpawnBot()
     {
         return playerAlive - 1 >= maxBot;
     }
+
 }

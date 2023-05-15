@@ -11,7 +11,7 @@ public class BotMoveState : IState<Bot>
         bot.ChangeAnim(ConstString.ANIM_RUN);
     }
 
-    public void OnExcute(Bot bot)
+    public void OnExecute(Bot bot)
     {
         if (bot.IsFire)
         {

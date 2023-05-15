@@ -210,13 +210,18 @@ MonoBehaviour:
   targetRing: {fileID: 2391677208393641153}
   currentTarget: {fileID: 0}
   spawnPoint: {fileID: 2391677208048761731}
-  w: {fileID: -8453935292193115891, guid: a1016b9fc1cb2b34f8f1b9deb3524c1f, type: 3}
+  weaponBullet: {fileID: 0}
+  onHand: {fileID: 0}
+  hand: {fileID: 8250543692272562775}
+  pant: {fileID: 8855250143572376640}
   TargetsInRange: []
   IsFire: 0
   isAttackAnimEnd: 0
   IsDead: 0
   delayAttack: 0
   speed: 0
+  randomInt: 0
+  randomInt2: 0
 --- !u!1 &2391677207850579493
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,5 +849,15 @@ Animator:
 --- !u!4 &7226664904132932916 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+  m_PrefabInstance: {fileID: 2391677207328693806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8250543692272562775 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3220319501169496967, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+  m_PrefabInstance: {fileID: 2391677207328693806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8855250143572376640 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2606217863934893458, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
   m_PrefabInstance: {fileID: 2391677207328693806}
   m_PrefabAsset: {fileID: 0}

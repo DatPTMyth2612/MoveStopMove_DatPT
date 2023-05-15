@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faec60fccc07088498c721d021a2d3a3, type: 3}
+  m_Name: Lighting
+  m_EditorClassIdentifier: 
+  weaponIndex: 7
+  weaponPrefab: {fileID: 5455873951437489015, guid: 195274ba107464c44b41b8835dc805ed, type: 3}
+  weaponName: Linghting
+  weaponDescription: + attack speed

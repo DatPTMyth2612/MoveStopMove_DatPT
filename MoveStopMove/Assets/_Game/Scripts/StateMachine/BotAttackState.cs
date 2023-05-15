@@ -17,7 +17,7 @@ public class BotAttackState : IState<Bot>
         }
     }
 
-    public void OnExcute(Bot bot)
+    public void OnExecute(Bot bot)
     {
         if (bot.isAttackAnimEnd)
         {

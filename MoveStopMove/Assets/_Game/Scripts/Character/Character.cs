@@ -14,14 +14,16 @@ public class Character : GameUnit
     [SerializeField] internal TargetRing targetRing;
     [SerializeField] internal Transform currentTarget;
     [SerializeField] internal Transform spawnPoint;
-
+    [SerializeField] internal Weapon weaponBullet;
+    [SerializeField] internal GameObject onHand;
+    [SerializeField] internal Transform hand;
+    [SerializeField] internal GameObject pant;
 
     private string currentAnim;
     internal Coroutine waitAfterAtkCoroutine;
     internal bool isCoolDownAttack = false;
+    //[SerializeField] internal Stage curretStage;
 
-
-    public Weapon w;
     public List<Transform> TargetsInRange = new List<Transform>();
     public bool IsFire;
     public bool isAttackAnimEnd = false;
@@ -40,10 +42,6 @@ public class Character : GameUnit
     private void Update()
     {
         
-    }
-    public void Move()
-    {
-
     }
 
     public void Attack()
@@ -101,7 +99,7 @@ public class Character : GameUnit
     public void SpawnWeaponBullet(Vector3 dir)
     {
         Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
-        Weapon weaponBulletUnit = SimplePool.Spawn<Weapon>(w,spawnPoint.position, rotation);
+        Weapon weaponBulletUnit = SimplePool.Spawn<Weapon>(weaponBullet,spawnPoint.position, rotation);
         weaponBulletUnit.SetDir(dir);
         weaponBulletUnit.isHasFire = true;
     }
@@ -135,7 +133,7 @@ public class Character : GameUnit
     {
         SimplePool.Despawn(this);
     }
-    public void OnHit()
+    public virtual void OnHit()
     {
         IsDead = true;
         //ChangeAnim(ConstString.ANIM_DEAD);

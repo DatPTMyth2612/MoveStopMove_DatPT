@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cdf3a7ccf0696d4496387c047a36425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 0
+  poolType: 1
   joystick: {fileID: 0}
   rb: {fileID: 6813827425356300043}
   anim: {fileID: 8466526499955321083}
@@ -352,13 +352,17 @@ MonoBehaviour:
   targetRing: {fileID: 6813827424684791852}
   currentTarget: {fileID: 0}
   spawnPoint: {fileID: 1371493392}
-  w: {fileID: -8453935292193115891, guid: a1016b9fc1cb2b34f8f1b9deb3524c1f, type: 3}
+  weaponBullet: {fileID: 0}
+  onHand: {fileID: 0}
+  hand: {fileID: 990989317223400162}
+  pant: {fileID: 385982837191052533}
   TargetsInRange: []
   IsFire: 0
   isAttackAnimEnd: 0
   IsDead: 0
   delayAttack: 0
   speed: 5
+  currentWeaponIndex: 0
 --- !u!54 &6813827425356300043
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -550,9 +554,19 @@ PrefabInstance:
     - target: {fileID: -529177695146175607, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 23f957b0120973145880e86f2cd0f183, type: 2}
+      objectReference: {fileID: 2100000, guid: fdb789c62046f624892aec223ee174ed, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+--- !u!1 &385982837191052533 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2606217863934893458, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+  m_PrefabInstance: {fileID: 6813827425886645915}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &990989317223400162 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3220319501169496967, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+  m_PrefabInstance: {fileID: 6813827425886645915}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2014559563366270337 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}

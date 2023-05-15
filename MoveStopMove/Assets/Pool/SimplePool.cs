@@ -329,4 +329,6 @@ public enum PoolType
 {
     Bot,
     Knife_Bullet,
+    Hammer_Bullet,
+    Arrow_Bullet,
 }

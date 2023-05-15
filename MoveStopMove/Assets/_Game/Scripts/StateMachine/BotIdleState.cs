@@ -13,7 +13,7 @@ public class BotIdleState : IState<Bot>
         bot.ChangeAnim(ConstString.ANIM_IDLE);
     }
 
-    public void OnExcute(Bot bot)
+    public void OnExecute(Bot bot)
     {
         changeStateTimer += Time.deltaTime;
         if (changeStateTimer >= timeEnd)

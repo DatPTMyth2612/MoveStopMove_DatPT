@@ -10,7 +10,7 @@ public class AttackRange : MonoBehaviour
     internal Transform TF;
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Bot")&&!character.IsDead)
+        if (other.CompareTag(ConstString.TAG_BOT))
         {
             character.IsFire = true;
             if (character.TargetsInRange == null||!character.TargetsInRange.Contains(other.transform))
@@ -23,7 +23,7 @@ public class AttackRange : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Bot"))
+        if (other.CompareTag(ConstString.TAG_BOT))
         {
             character.IsFire = false;
             character.OnDeSelect();
