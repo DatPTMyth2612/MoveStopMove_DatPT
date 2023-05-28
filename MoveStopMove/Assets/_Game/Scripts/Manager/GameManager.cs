@@ -9,8 +9,8 @@ public enum GameState { MainMenu, Gameplay, Pause }
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] internal FloatingJoystick joystick;
-    [SerializeField] private CameraFollow cameraFollow;
-    [SerializeField] private Camera mainCamera;
+    [SerializeField] internal CameraFollow cameraFollow;
+    [SerializeField] internal Camera mainCamera;
     private GameState gameState;
 
     private void Start()

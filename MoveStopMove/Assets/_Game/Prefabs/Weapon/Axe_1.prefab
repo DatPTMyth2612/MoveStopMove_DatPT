@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7705391787740277656}
   - component: {fileID: 6719606578627454013}
   - component: {fileID: 8837225602540327159}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Axe_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,9 +61,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 90f142cb7dd848f43bbac8ea2b0c8fce, type: 3}
+  - {fileID: 2100000, guid: fa3a93f0bfb89d44ca7ad77560d801fa, type: 2}
   - {fileID: 4874126678125670354, guid: 90f142cb7dd848f43bbac8ea2b0c8fce, type: 3}
-  - {fileID: -3846018093981099296, guid: 90f142cb7dd848f43bbac8ea2b0c8fce, type: 3}
+  - {fileID: 2100000, guid: 39acb57efcd167944864b369decef068, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

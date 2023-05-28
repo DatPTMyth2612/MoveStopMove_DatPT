@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 866062019414823468}
   - component: {fileID: 4299536059586485641}
   - component: {fileID: 2040115297103538499}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: knife 1
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -61,8 +61,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 052cf758ab42f0648a7b92c6d18ba9a7, type: 3}
-  - {fileID: -3846018093981099296, guid: 052cf758ab42f0648a7b92c6d18ba9a7, type: 3}
+  - {fileID: 2100000, guid: 0e0c70d3f54804f4fb891ed5767680c5, type: 2}
+  - {fileID: 2100000, guid: 20b9ccf68ba30c34a8e8a6c56f896e02, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

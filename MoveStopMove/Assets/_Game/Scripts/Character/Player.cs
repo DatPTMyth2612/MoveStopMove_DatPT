@@ -19,18 +19,30 @@ public class Player : Character
 
     public override void OnInit()
     {
-        base.OnInit();
-        
+        base.OnInit();   
     }
 
     private void Start()
     {
         currentWeaponIndex = PlayerPrefs.GetInt("Selected Weapon", 0);
+        CreateWeapon(currentWeaponIndex);
         weaponBullet = WeaponConfig.Ins.weapon[currentWeaponIndex].weapon;
-        onHand = Instantiate(WeaponConfig.Ins.weapon[currentWeaponIndex].weaponPrefab, hand);
-        pant.GetComponent<SkinnedMeshRenderer>().material = PantsConfig.Ins.pant[0].pantMaterial;
+        pant.GetComponent<SkinnedMeshRenderer>().material = SkinShopConfig.Ins.pant[0].pantMaterial;
+        hairSkin = Instantiate(SkinShopConfig.Ins.hair[2].hair, hair);
+        Time.timeScale = 0f;
     }
-    // Update is called once per frame
+    public void CreateWeapon(int weaponIndex)
+    {
+        if (weaponOnHand != null)
+        {
+            Destroy(weaponOnHand);
+            weaponOnHand = Instantiate(WeaponConfig.Ins.weapon[weaponIndex].weaponPrefab, hand);
+        }
+        else
+        {
+            weaponOnHand = Instantiate(WeaponConfig.Ins.weapon[weaponIndex].weaponPrefab, hand);
+        }
+    }
     void Update()
     {
         if (joystick != null)
@@ -47,7 +59,7 @@ public class Player : Character
             {
                 if (IsFire)
                 {
-                    IsFire = false;
+                    //IsFire = false;
                     if (delayAttack <= 0)
                     {
                         RotationToTarget();
@@ -76,4 +88,5 @@ public class Player : Character
         //    }
         //}
     }
+    
 }

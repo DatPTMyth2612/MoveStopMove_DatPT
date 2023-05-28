@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faec60fccc07088498c721d021a2d3a3, type: 3}
+  m_Name: Knife
+  m_EditorClassIdentifier: 
+  weaponIndex: 0
+  weaponSprite: {fileID: 21300000, guid: 33c349a86a058c34196d38bf8d1d2ca9, type: 3}
+  weaponPrefab: {fileID: 526655615588485270, guid: 1b10769c457436b44aca6dc85fe13958, type: 3}
+  weapon: {fileID: 5115372433549116705, guid: a1016b9fc1cb2b34f8f1b9deb3524c1f, type: 3}
+  weaponName: Knife
+  weaponDescription: + attack speed
+  priceWeapon: 0
+  isUnlocked: 1

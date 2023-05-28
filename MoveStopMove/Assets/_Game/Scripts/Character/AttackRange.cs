@@ -7,9 +7,11 @@ public class AttackRange : MonoBehaviour
 {
     [SerializeField] private Character character;
     [SerializeField] private SphereCollider radiusRatio;
+    [SerializeField] private float radius = 1.28f;
     internal Transform TF;
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
+        Character otherCollider = Cache.GetCharacterInParent(other);
         if (other.CompareTag(ConstString.TAG_BOT))
         {
             character.IsFire = true;
@@ -19,13 +21,16 @@ public class AttackRange : MonoBehaviour
             }
             character.currentTarget = FindNearestEnemy();
             character.OnSelect();
+            if (otherCollider.IsDead)
+            {
+                character.OnDeSelect();
+            }
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(ConstString.TAG_BOT))
-        {
-            character.IsFire = false;
+        { 
             character.OnDeSelect();
         }
         if (other.CompareTag("Weapon"))
@@ -54,6 +59,6 @@ public class AttackRange : MonoBehaviour
     }
     public float GetAttackRadius()
     {
-        return radiusRatio.radius * TF.localScale.x;
+        return radius * TF.localScale.x;
     }
 }

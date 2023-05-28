@@ -10,19 +10,22 @@ public class Character : GameUnit
     [SerializeField] internal Rigidbody rb;
     [SerializeField] internal Animator anim;
     [SerializeField] internal AttackRange attackRange;
-    [SerializeField] internal CharacterColider characterColider;
+    [SerializeField] internal Collider characterCollider;
     [SerializeField] internal TargetRing targetRing;
     [SerializeField] internal Transform currentTarget;
     [SerializeField] internal Transform spawnPoint;
     [SerializeField] internal Weapon weaponBullet;
-    [SerializeField] internal GameObject onHand;
+    [SerializeField] internal GameObject weaponOnHand;
     [SerializeField] internal Transform hand;
+    [SerializeField] internal Transform hair;
     [SerializeField] internal GameObject pant;
+    
 
     private string currentAnim;
     internal Coroutine waitAfterAtkCoroutine;
     internal bool isCoolDownAttack = false;
-    //[SerializeField] internal Stage curretStage;
+    internal GameObject hairSkin;
+    [SerializeField] internal Stage curretStage;
 
     public List<Transform> TargetsInRange = new List<Transform>();
     public bool IsFire;
@@ -32,6 +35,7 @@ public class Character : GameUnit
     public float speed;
     public delegate void CallbackMethod();
     internal float countDownDie = 1.5f;
+    internal float exp;
 
 
 
@@ -60,7 +64,6 @@ public class Character : GameUnit
     }
     public void StartCoroutineAttack()
     {
-        //ChangeAnim(ConstString.ANIM_ATTACK);
 
         float animLength = anim.GetCurrentAnimatorStateInfo(0).length;
 
@@ -99,8 +102,10 @@ public class Character : GameUnit
     public void SpawnWeaponBullet(Vector3 dir)
     {
         Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
-        Weapon weaponBulletUnit = SimplePool.Spawn<Weapon>(weaponBullet,spawnPoint.position, rotation);
+        Weapon weaponBulletUnit = SimplePool.Spawn<Weapon>(weaponBullet,TF.position, rotation);
         weaponBulletUnit.SetDir(dir);
+        weaponBulletUnit.owner = this;
+        weaponBulletUnit.TF.localScale += new Vector3(exp,exp,exp);
         weaponBulletUnit.isHasFire = true;
     }
 
@@ -128,6 +133,8 @@ public class Character : GameUnit
         joystick = GameManager.Ins.joystick;
         targetRing.OnInit();
         IsDead = false;
+        curretStage = LevelManager.Ins.stage;
+        exp = 1;
     }
     public override void OnDespawn()
     {
@@ -145,6 +152,18 @@ public class Character : GameUnit
     }
     public void OnDeSelect()
     {
+        IsFire = false;
+        TargetsInRange.Remove(currentTarget);
         targetRing.DisableRing();
+    }
+    public void IncreaseExp(float expEnemy)
+    {
+        exp += expEnemy;
+        TF.localScale = TF.localScale + new Vector3(expEnemy * 0.05f, expEnemy * 0.05f, expEnemy * 0.05f);
+    }
+    public void AddCoin()
+    {
+        LevelManager.Ins.coin += 50;
+        LevelManager.Ins.SetCoinText();
     }
 }

@@ -206,14 +206,16 @@ MonoBehaviour:
   rb: {fileID: 2391677207661980473}
   anim: {fileID: 774696860717979726}
   attackRange: {fileID: 2391677207850579499}
-  characterColider: {fileID: 2047832447605356730}
+  characterCollider: {fileID: 2391677207559962498}
   targetRing: {fileID: 2391677208393641153}
   currentTarget: {fileID: 0}
   spawnPoint: {fileID: 2391677208048761731}
   weaponBullet: {fileID: 0}
-  onHand: {fileID: 0}
+  weaponOnHand: {fileID: 0}
   hand: {fileID: 8250543692272562775}
+  hair: {fileID: 7670464317449624902}
   pant: {fileID: 8855250143572376640}
+  curretStage: {fileID: 0}
   TargetsInRange: []
   IsFire: 0
   isAttackAnimEnd: 0
@@ -322,6 +324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 2391677207661980479}
   radiusRatio: {fileID: 2391677207850579497}
+  radius: 1.28
 --- !u!135 &2391677207850579497
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -849,6 +852,11 @@ Animator:
 --- !u!4 &7226664904132932916 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+  m_PrefabInstance: {fileID: 2391677207328693806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7670464317449624902 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3800467336962686104, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
   m_PrefabInstance: {fileID: 2391677207328693806}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8250543692272562775 stripped

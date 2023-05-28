@@ -6,8 +6,11 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     public int weaponIndex;
+    public Sprite weaponSprite;
     public GameObject weaponPrefab;
     public Weapon weapon;
     public string weaponName;
     public string weaponDescription;
+    public int priceWeapon;
+    public bool isUnlocked;
 }

@@ -6,7 +6,8 @@ using UnityEngine;
 public static class Cache 
 {
     static Dictionary<Collider, Character> m_Character = new Dictionary<Collider, Character>();
-    public static Character GetCharacter(Collider key)
+
+    public static Character GetCharacterInParent(Collider key)
     {
         if (!m_Character.ContainsKey(key))
         {

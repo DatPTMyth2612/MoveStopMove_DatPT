@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3646720467343579128}
   m_Layer: 0
   m_Name: Z 1
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +101,7 @@ MonoBehaviour:
   poolType: 0
   rb: {fileID: -3646720467343579128}
   anim: {fileID: 4682891350630029773}
+  dirToTarget: {x: 0, y: 0, z: 0}
 --- !u!54 &-3646720467343579128
 Rigidbody:
   m_ObjectHideFlags: 0

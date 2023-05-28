@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faec60fccc07088498c721d021a2d3a3, type: 3}
+  m_Name: Hammer
+  m_EditorClassIdentifier: 
+  weaponIndex: 5
+  weaponSprite: {fileID: 21300000, guid: 2dbdf917bda18854c9feb89adc0a75f7, type: 3}
+  weaponPrefab: {fileID: 6543565485603221975, guid: 061a8a5fa9d8a5044873f0f0be39e9e7, type: 3}
+  weapon: {fileID: -4409395017859880519, guid: 7dc2ba274abc9c24ea238f40da0b4f9f, type: 3}
+  weaponName: Hammer
+  weaponDescription: + attack speed
+  priceWeapon: 250
+  isUnlocked: 0

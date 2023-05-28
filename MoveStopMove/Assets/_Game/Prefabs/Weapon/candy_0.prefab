@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4497212470459896487}
   - component: {fileID: 704414766088002818}
   - component: {fileID: 3324327461321697736}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: candy_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3828796659916621853}
-  m_LocalRotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.22627936, y: -0.68832374, z: -0.64147586, w: 0.25202546}
+  m_LocalPosition: {x: -0.156, y: 0.06, z: -0.152}
   m_LocalScale: {x: 39, y: 39, z: 39}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -85.667, y: -131.426, z: -9.009}
 --- !u!33 &704414766088002818
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5874024938806094701}
   - component: {fileID: 7362084780455601352}
   - component: {fileID: 4742174220087021570}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,8 +61,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: d7e06bd356f5b2342ac6deeceb973884, type: 3}
-  - {fileID: 4874126678125670354, guid: d7e06bd356f5b2342ac6deeceb973884, type: 3}
+  - {fileID: 2100000, guid: 14fe0b0b24452a34094404970482c62e, type: 2}
+  - {fileID: 2100000, guid: acc8cd836c680b54896f90842db33994, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

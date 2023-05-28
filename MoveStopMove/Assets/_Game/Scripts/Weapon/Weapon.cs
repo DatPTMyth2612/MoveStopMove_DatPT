@@ -7,9 +7,10 @@ public class Weapon : GameUnit
     [SerializeField] internal Rigidbody rb;
     [SerializeField] internal Transform anim;
 
+    internal Character owner;
     internal bool isHasFire;
     public Vector3 dirToTarget;
-    //private Vector3 startPos;
+    public Vector3 startPos;
 
 
     public void SetDir(Vector3 dir)
@@ -36,7 +37,7 @@ public class Weapon : GameUnit
     }
     private void OnTriggerEnter(Collider other)
     {
-        Character character = Cache.GetCharacter(other);
+        Character character = Cache.GetCharacterInParent(other);
         if(other.gameObject.layer == 7)
         {
             OnDespawn();
@@ -44,9 +45,18 @@ public class Weapon : GameUnit
         }
         if (other.CompareTag(ConstString.TAG_BOT))
         {
+            if(character == owner)
+            {
+                return;
+            }
+            if(owner is Player)
+            {
+                owner.AddCoin();
+            }
+            owner.IncreaseExp(character.exp);
+            owner.OnDeSelect();
+            character.OnHit();
             OnDespawn();
-            if(character is Bot) character.OnHit();
-            else character.OnHit();
         }
     }
     public override void OnDespawn()

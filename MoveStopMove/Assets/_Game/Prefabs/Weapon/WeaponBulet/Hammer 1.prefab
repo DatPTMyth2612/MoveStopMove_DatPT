@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5874024938806094701}
   - component: {fileID: 7362084780455601352}
   - component: {fileID: 4742174220087021570}
-  - component: {fileID: 6028070660015219213}
   - component: {fileID: 2964094568306945791}
   - component: {fileID: 4283308983379297087}
+  - component: {fileID: -4409395017859880519}
   m_Layer: 0
   m_Name: Hammer 1
   m_TagString: Weapon
@@ -64,8 +64,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: d7e06bd356f5b2342ac6deeceb973884, type: 3}
-  - {fileID: 4874126678125670354, guid: d7e06bd356f5b2342ac6deeceb973884, type: 3}
+  - {fileID: 2100000, guid: 14fe0b0b24452a34094404970482c62e, type: 2}
+  - {fileID: 2100000, guid: acc8cd836c680b54896f90842db33994, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,21 +87,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6028070660015219213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6543565485603221975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92a71a7d0fd2db04db5a5ecf730b4c5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poolType: 2
-  rb: {fileID: 2964094568306945791}
-  anim: {fileID: 5874024938806094701}
 --- !u!54 &2964094568306945791
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -131,3 +116,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.012662848, y: 0.025129152, z: 0.0060103727}
   m_Center: {x: 0.00005817413, y: -0.00064957835, z: -9.231064e-18}
+--- !u!114 &-4409395017859880519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6543565485603221975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b717d889c92fb294ca2aeb77fce7d4a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolType: 0
+  rb: {fileID: 2964094568306945791}
+  anim: {fileID: 5874024938806094701}
+  dirToTarget: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}

@@ -64,8 +64,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: fa75ab119fca0184aa4ca579093c50a1, type: 3}
-  - {fileID: -3846018093981099296, guid: fa75ab119fca0184aa4ca579093c50a1, type: 3}
+  - {fileID: 2100000, guid: fc1c2c8680590e64492c6873d484f22d, type: 2}
+  - {fileID: 2100000, guid: 32956d08aa86aa64693a21e2a4a7f74e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -102,6 +102,8 @@ MonoBehaviour:
   poolType: 0
   rb: {fileID: 4928531249308042432}
   anim: {fileID: 6005067618653786367}
+  dirToTarget: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
 --- !u!54 &4928531249308042432
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2919132206337115620}
   - component: {fileID: 2246465892813589057}
   - component: {fileID: 4092078376079048331}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: boomerang
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: cd14dca3fbd90dc43936d061dcc087b4, type: 3}
+  - {fileID: 2100000, guid: ec3126808ca299d49afb73028b2e6beb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

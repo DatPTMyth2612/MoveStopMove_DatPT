@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Bot : Character
 {
+    internal MissionWaypoint wayPoint;
     public int randomInt;
     public int randomInt2;
 
@@ -19,27 +20,19 @@ public class Bot : Character
     {
         base.OnInit();
         navMeshAgent= GetComponent<NavMeshAgent>();
-        //randomInt = Random.Range(0, 3);
-        //randomInt2 = Random.Range(0, 3);
-        //weaponBullet = WeaponConfig.Ins.weapon[randomInt].weapon;
-        //pant.GetComponent<SkinnedMeshRenderer>().material = PantsConfig.Ins.pant[randomInt2].pantMaterial;
-        //onHand = Instantiate(WeaponConfig.Ins.weapon[randomInt].weaponPrefab, hand);
     }
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        OnInit();
         randomInt = Random.Range(0, 3);
         randomInt2 = Random.Range(0, 3);
         weaponBullet = WeaponConfig.Ins.weapon[randomInt].weapon;
-        pant.GetComponent<SkinnedMeshRenderer>().material = PantsConfig.Ins.pant[randomInt2].pantMaterial;
-        onHand = Instantiate(WeaponConfig.Ins.weapon[randomInt].weaponPrefab, hand);
+        pant.GetComponent<SkinnedMeshRenderer>().material = SkinShopConfig.Ins.pant[randomInt2].pantMaterial;
+        hairSkin = Instantiate(SkinShopConfig.Ins.hair[randomInt2].hair, hair);
+        weaponOnHand = Instantiate(WeaponConfig.Ins.weapon[randomInt].weaponPrefab, hand);
         currentState = botIdleState;
         currentState.OnEnter(this);
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -48,17 +41,6 @@ public class Bot : Character
             delayAttack -= Time.deltaTime;
         }
         currentState.OnExecute(this);
-        if(IsDead)
-        {
-            ChangeAnim(ConstString.ANIM_DEAD);
-            navMeshAgent.SetDestination(TF.position);   
-            countDownDie -=Time.deltaTime;
-            if(countDownDie <= 0.1f)
-            {
-                OnDespawn();
-                navMeshAgent.enabled = false;
-            }
-        }
     }
     public void ChangeState(IState<Bot> newState)
     {
@@ -68,6 +50,10 @@ public class Bot : Character
     }
     public override void OnHit()
     {
-        ChangeState(botDieState); 
+        base.OnHit();
+        wayPoint.OnDespawn();
+        ChangeState(botDieState);
+        curretStage.OnCharacterDie(this);
+        //LevelManager.Ins.RespawnEnemy();
     }
 }

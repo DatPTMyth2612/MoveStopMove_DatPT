@@ -8,7 +8,7 @@ public class CameraFollow : MonoBehaviour
     public float smoothSpeed = 0.125f;
     [SerializeField] internal Vector3 offset;
     internal Transform TF;
-    internal Player player;
+ 
     private void FixedUpdate()
     {
         Vector3 desiredPos = target.position + offset;
