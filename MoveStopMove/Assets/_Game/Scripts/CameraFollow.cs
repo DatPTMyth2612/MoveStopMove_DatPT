@@ -8,7 +8,11 @@ public class CameraFollow : MonoBehaviour
     public float smoothSpeed = 0.125f;
     [SerializeField] internal Vector3 offset;
     internal Transform TF;
- 
+
+    private void Start()
+    {
+        target = LevelManager.Ins.player.transform;
+    }
     private void FixedUpdate()
     {
         Vector3 desiredPos = target.position + offset;

@@ -6,14 +6,71 @@ using UnityEngine.AI;
 public class Stage : GameUnit
 {
     [SerializeField] internal List<Character> characterInStage = new List<Character>();
+    [SerializeField] internal Color[] botColors;
     public Bot botPrefab;
     private NavMeshHit hit;
     internal int playerAlive;
     internal int maxBot;
-
-    private void Start()
+    internal List<Color> characterColorAvaible = new List<Color>();
+    public string[] playerNames =
     {
-        OnInit();
+        "Abby",
+        "Abbye",
+        "Abigael",
+        "Abigail",
+        "Cicely",
+        "Cicily",
+        "Ciel",
+        "Cilka",
+        "Cinda",
+        "Cindee",
+        "Dalila",
+        "Dallas",
+        "Daloris",
+        "Damara",
+        "Editha",
+        "Edithe",
+        "Ediva",
+        "Edna",
+        "Edwina",
+        "Edy",
+        "Edyth",
+        "Edythe",
+        "Effie",
+        "Eileen",
+        "Jodie",
+        "Jody",
+        "Joeann",
+        "Joela",
+        "Joelie",
+        "Joell",
+        "Joella",
+        "Joelle",
+        "Joellen",
+        "Joelly",
+        "Joellyn",
+    };
+    public override void OnInit()
+    {
+        playerAlive = LevelManager.Ins.playerAlive;
+        maxBot = LevelManager.Ins.maxBot;
+        Player playerObj = SimplePool.Spawn<Player>(LevelManager.Ins.playerPrefab, new Vector3(0, 1.5f, 0), Quaternion.identity);
+        LevelManager.Ins.player = playerObj;
+        characterInStage.Add(playerObj);
+        playerObj.OnInit();
+        MissionWaypoint waypoint = SimplePool.Spawn<MissionWaypoint>(LevelManager.Ins.waypointPrefab);
+        waypoint.targetFollow = playerObj;
+        waypoint.OnInit();
+        characterColorAvaible.AddRange(botColors);
+        if (IsCanSpawnBot())
+        {
+            SpawnBot(maxBot);
+        }
+    }
+
+    public override void OnDespawn()
+    {
+
     }
     public Vector3 RandomPointInStage()
     {
@@ -64,10 +121,19 @@ public class Stage : GameUnit
         {
             Vector3 pointToSpawn = GetPointToSpawn();
             Bot bot = SimplePool.Spawn<Bot>(LevelManager.Ins.botPrefab, pointToSpawn, Quaternion.identity);
+            bot.name = $"{playerNames[Random.Range(0, playerNames.Length)]}";
+            Color newColor = characterColorAvaible[0];
+            characterColorAvaible.Remove(newColor);
+            bot.ChangeColorBody(newColor);
             characterInStage.Add(bot);
+            bot.currentStage = this;
             bot.OnInit();
             MissionWaypoint waypoint = SimplePool.Spawn<MissionWaypoint>(LevelManager.Ins.waypointPrefab);
             waypoint.targetFollow = bot;
+            waypoint.targetName.SetText(bot.name.ToString());
+            waypoint.targetName.color = newColor;
+            waypoint.imageInfo.color = newColor;
+            waypoint.imageArrow.color = newColor;
             waypoint.OnInit();
             bot.wayPoint = waypoint;
         }
@@ -106,19 +172,5 @@ public class Stage : GameUnit
             }
         }
     }
-    public override void OnInit()
-    {
-        playerAlive = LevelManager.Ins.playerAlive;
-        maxBot = LevelManager.Ins.maxBot;
-        characterInStage.Add(LevelManager.Ins.player);
-        if (IsCanSpawnBot())
-        {
-            SpawnBot(maxBot);
-        }
-    }
-
-    public override void OnDespawn()
-    {
-
-    }
+    
 }

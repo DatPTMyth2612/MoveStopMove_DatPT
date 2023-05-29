@@ -10,8 +10,10 @@ public class MissionWaypoint : GameUnit
     [SerializeField] internal Image imageArrow;
     [SerializeField] internal Transform arrowImg;
     [SerializeField] internal TextMeshProUGUI expInfo;
+    [SerializeField] internal TextMeshProUGUI targetName;
     [SerializeField] internal GameObject waypoint;
-    [SerializeField] internal Bot targetFollow;
+    [SerializeField] internal Character targetFollow;
+    [SerializeField] internal Vector3 offset;
     [SerializeField] private RectTransform rectTransform;
     internal Camera cameraMain;
 
@@ -26,7 +28,7 @@ public class MissionWaypoint : GameUnit
     }
     public Vector3 ConvertWPtoCP()
     {
-        Vector3 viewPos = cameraMain.WorldToViewportPoint(targetFollow.TF.position);
+        Vector3 viewPos = cameraMain.WorldToViewportPoint(targetFollow.TF.position + offset);
 
         viewPos.x = Mathf.Clamp(viewPos.x, 0.05f, 0.95f);
         viewPos.y = Mathf.Clamp(viewPos.y, 0.05f, 0.95f);
@@ -63,11 +65,13 @@ public class MissionWaypoint : GameUnit
             (viewPos.x > 0.05f && viewPos.x < 0.95f) && (viewPos.y > 0.05f && viewPos.y < 0.95f)
         )
         {
-            waypoint.SetActive(false);
+            targetName.gameObject.SetActive(true);
+            imageArrow.gameObject.SetActive(false);
         }
         else
         {
-            waypoint.SetActive(true);
+            imageArrow.gameObject.SetActive(true);
+            targetName.gameObject.SetActive(false);
         }
     }
     private void RotationToTarget()

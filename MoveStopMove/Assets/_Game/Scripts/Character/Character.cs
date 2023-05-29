@@ -25,7 +25,7 @@ public class Character : GameUnit
     internal Coroutine waitAfterAtkCoroutine;
     internal bool isCoolDownAttack = false;
     internal GameObject hairSkin;
-    [SerializeField] internal Stage curretStage;
+    [SerializeField] internal Stage currentStage;
 
     public List<Transform> TargetsInRange = new List<Transform>();
     public bool IsFire;
@@ -133,7 +133,7 @@ public class Character : GameUnit
         joystick = GameManager.Ins.joystick;
         targetRing.OnInit();
         IsDead = false;
-        curretStage = LevelManager.Ins.stage;
+        //curretStage = LevelManager.Ins.stage;
         exp = 1;
     }
     public override void OnDespawn()

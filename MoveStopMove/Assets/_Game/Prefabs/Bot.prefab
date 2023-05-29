@@ -222,6 +222,7 @@ MonoBehaviour:
   IsDead: 0
   delayAttack: 0
   speed: 0
+  bodyRenderer: {fileID: 2771428464874457284}
   randomInt: 0
   randomInt2: 0
 --- !u!1 &2391677207850579493
@@ -847,6 +848,11 @@ PrefabInstance:
 --- !u!95 &774696860717979726 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+  m_PrefabInstance: {fileID: 2391677207328693806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2771428464874457284 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8699012472884554006, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
   m_PrefabInstance: {fileID: 2391677207328693806}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7226664904132932916 stripped

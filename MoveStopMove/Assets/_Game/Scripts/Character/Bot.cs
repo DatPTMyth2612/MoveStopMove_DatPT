@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class Bot : Character
 {
+    [SerializeField] internal SkinnedMeshRenderer bodyRenderer;
+    internal Color currentColor;
     internal MissionWaypoint wayPoint;
     public int randomInt;
     public int randomInt2;
@@ -15,11 +17,11 @@ public class Bot : Character
     public BotAttackState botAttackState = new BotAttackState();
     public BotDieState botDieState = new BotDieState();
     internal NavMeshAgent navMeshAgent;
-
+    
     public override void OnInit()
     {
         base.OnInit();
-        navMeshAgent= GetComponent<NavMeshAgent>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
     private void Start()
     {
@@ -53,7 +55,12 @@ public class Bot : Character
         base.OnHit();
         wayPoint.OnDespawn();
         ChangeState(botDieState);
-        curretStage.OnCharacterDie(this);
-        //LevelManager.Ins.RespawnEnemy();
+        currentStage.characterColorAvaible.Add(currentColor);
+        currentStage.OnCharacterDie(this);
+    }
+    public void ChangeColorBody(Color newColor)
+    {
+        currentColor = newColor;
+        bodyRenderer.material.SetColor("_Color", newColor);
     }
 }

@@ -10,12 +10,14 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] internal Bot botPrefab;
     [SerializeField] internal MissionWaypoint waypointPrefab;
     [SerializeField] internal NavMeshSurface navMeshSurface;
-    [SerializeField] internal Stage stage;
+    [SerializeField] internal Stage stagePrefab;
     [SerializeField] internal int playerAlive = 30;
     [SerializeField] internal int maxBot = 10;
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI playerAliveText;
-    [SerializeField] internal Player player;
+    [SerializeField] internal Player playerPrefab;
+    internal Player player;
+    internal Stage stage;
 
     private Transform TF;
     public int coin;
@@ -35,8 +37,8 @@ public class LevelManager : Singleton<LevelManager>
     public void Start()
     {
         TF = gameObject.transform;
-        Instantiate(stage, Vector3.zero, Quaternion.identity,TF);
-        stage.characterInStage.Clear();
+        stage = Instantiate(stagePrefab, Vector3.zero, Quaternion.identity,TF);
+        //stage.characterInStage.Clear();
         stage.OnInit();
         navMeshSurface = GetComponent<NavMeshSurface>();
     }
