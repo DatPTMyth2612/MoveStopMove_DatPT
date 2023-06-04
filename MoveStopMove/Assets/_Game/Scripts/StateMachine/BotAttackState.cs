@@ -7,6 +7,7 @@ public class BotAttackState : IState<Bot>
 {
     public void OnEnter(Bot bot)
     {
+        bot.ChangeAnim(ConstString.ANIM_ATTACK);
         if (bot.currentTarget != null)
         {
             if (bot.delayAttack <= 0.01f)
@@ -19,7 +20,7 @@ public class BotAttackState : IState<Bot>
 
     public void OnExecute(Bot bot)
     {
-        if (bot.isAttackAnimEnd)
+        if (bot.IsAttackAnimEnd)
         {
             bot.ChangeState(bot.botIdleState);
         }

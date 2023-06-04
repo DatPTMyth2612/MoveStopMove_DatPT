@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
@@ -17,13 +18,13 @@ public class WeaponShopUI : UICanvas
     [SerializeField] private Text weaponDescription;
     [SerializeField] private TextMeshProUGUI priceWeapon;
     [SerializeField] private Transform weaponContainer;
-    [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject selectBtn;
     [SerializeField] private GameObject equipBtn;
     [SerializeField] private GameObject pursBtn;
     //[SerializeField] private GameObject weaponUI;
     void Start()
     {
+        player = LevelManager.Ins.player;
         equipBtn.SetActive(false);
         currentWeaponIndex = PlayerPrefs.GetInt("Selected Weapon", 0);
         equipWeaponIndex = PlayerPrefs.GetInt("EquipWeapon", 0);
@@ -31,13 +32,14 @@ public class WeaponShopUI : UICanvas
         for (int i = 0; i <= maxWeaponAmount; i++)
         {
             GameObject weaponModel = Instantiate(WeaponConfig.Ins.weapon[i].weaponPrefab, weaponContainer);
-            weaponModel.transform.localPosition = Vector3.zero;
+            weaponModel.transform.localPosition = Vector3.down;
             weaponModel.transform.localRotation = Quaternion.Euler(0, 0, 160);
             weaponModels.Add(weaponModel);
             weaponModels[i].SetActive(false);
+            PlayerPrefData.GetBool(WeaponConfig.Ins.weapon[i].weaponName);
             if (WeaponConfig.Ins.weapon[i].priceWeapon == 0)
             {
-                WeaponConfig.Ins.weapon[i].isUnlocked = true;
+                PlayerPrefData.SetBool(WeaponConfig.Ins.weapon[i].weaponName, true);
             }
         }
         weaponModels[currentWeaponIndex].SetActive(true);
@@ -49,7 +51,7 @@ public class WeaponShopUI : UICanvas
         currentWeaponIndex--;
         if (currentWeaponIndex <= 0) currentWeaponIndex = 0;
         weaponModels[currentWeaponIndex].SetActive(true);
-        if (WeaponConfig.Ins.weapon[currentWeaponIndex].isUnlocked)
+        if (PlayerPrefData.GetBool(WeaponConfig.Ins.weapon[currentWeaponIndex].weaponName))
         {
             PlayerPrefs.SetInt("Selected Weapon", currentWeaponIndex);
         }
@@ -61,7 +63,7 @@ public class WeaponShopUI : UICanvas
         currentWeaponIndex++;
         if (currentWeaponIndex >= maxWeaponAmount) currentWeaponIndex = maxWeaponAmount;
         weaponModels[currentWeaponIndex].SetActive(true);
-        if (WeaponConfig.Ins.weapon[currentWeaponIndex].isUnlocked)
+        if (PlayerPrefData.GetBool(WeaponConfig.Ins.weapon[currentWeaponIndex].weaponName))
         {
             PlayerPrefs.SetInt("Selected Weapon", currentWeaponIndex);
         }
@@ -73,7 +75,7 @@ public class WeaponShopUI : UICanvas
         {
             LevelManager.Ins.coin -= WeaponConfig.Ins.weapon[currentWeaponIndex].priceWeapon;
             LevelManager.Ins.SetCoinText();
-            WeaponConfig.Ins.weapon[currentWeaponIndex].isUnlocked = true;
+            PlayerPrefData.SetBool(WeaponConfig.Ins.weapon[currentWeaponIndex].weaponName, true);
         }
         UpdateWeaponUI();
     }
@@ -83,19 +85,19 @@ public class WeaponShopUI : UICanvas
         PlayerPrefs.SetInt("Selected Weapon", currentWeaponIndex);
         PlayerPrefs.SetInt("EquipWeapon", equipWeaponIndex);
         player.weaponBullet = WeaponConfig.Ins.weapon[currentWeaponIndex].weapon;
+        player.attackRange.gameObject.transform.localScale = player.attackRangeDefault;
+        player.EquipWeapon(equipWeaponIndex);
         player.CreateWeapon(currentWeaponIndex);
         UpdateWeaponUI();
     }
     public void CloseButton()
     {
-        //Time.timeScale = 1f;
-        mainMenu.SetActive(true);
-        //GameManager.Ins.ChangeState(GameState.Gameplay);
+        UIManager.Ins.OpenUI<MainMenu>();
         Close(0);
     } 
     private void UpdateWeaponUI()
     {
-        if(WeaponConfig.Ins.weapon[currentWeaponIndex].isUnlocked)
+        if(PlayerPrefData.GetBool(WeaponConfig.Ins.weapon[currentWeaponIndex].weaponName))
         {
             pursBtn.SetActive(false);
             equipBtn.SetActive(true);

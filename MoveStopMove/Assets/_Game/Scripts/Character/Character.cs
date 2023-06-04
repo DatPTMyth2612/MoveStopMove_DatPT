@@ -10,7 +10,7 @@ public class Character : GameUnit
     [SerializeField] internal Rigidbody rb;
     [SerializeField] internal Animator anim;
     [SerializeField] internal AttackRange attackRange;
-    [SerializeField] internal Collider characterCollider;
+    [SerializeField] internal CharacterCollider characterCollider;
     [SerializeField] internal TargetRing targetRing;
     [SerializeField] internal Transform currentTarget;
     [SerializeField] internal Transform spawnPoint;
@@ -19,17 +19,25 @@ public class Character : GameUnit
     [SerializeField] internal Transform hand;
     [SerializeField] internal Transform hair;
     [SerializeField] internal GameObject pant;
-    
+    [SerializeField] internal Stage currentStage;
+    [SerializeField] internal SkinnedMeshRenderer bodyRenderer;
+
 
     private string currentAnim;
+    internal Vector3 attackRangeDefault;
     internal Coroutine waitAfterAtkCoroutine;
     internal bool isCoolDownAttack = false;
     internal GameObject hairSkin;
-    [SerializeField] internal Stage currentStage;
+    internal Coroutine waitAfterDeathCoroutine;
+    internal MissionWaypoint wayPoint;
+    
 
-    public List<Transform> TargetsInRange = new List<Transform>();
+    public List<Transform> m_TargetsInRange = new List<Transform>();
     public bool IsFire;
-    public bool isAttackAnimEnd = false;
+    public bool IsBoost;
+    protected bool isAttackAnimEnd = false;
+    public bool IsAttackAnimEnd => isAttackAnimEnd;
+
     public bool IsDead;
     public float delayAttack = 0f;
     public float speed;
@@ -43,10 +51,7 @@ public class Character : GameUnit
     {
         OnInit();
     }
-    private void Update()
-    {
-        
-    }
+
 
     public void Attack()
     {
@@ -61,6 +66,16 @@ public class Character : GameUnit
         ChangeAnim(ConstString.ANIM_ATTACK);
         SpawnWeaponBullet(dir);
         StartCoroutineAttack();
+        if (!IsBoost) return;         
+        OnResetPropertie();
+    }
+    public void EquipWeapon(int weaponIndex)
+    {
+        weaponBullet = WeaponConfig.Ins.weapon[weaponIndex].weapon;
+        weaponBullet.speed = WeaponConfig.Ins.weapon[weaponIndex].weaponSpeed;
+        float extraRange = WeaponConfig.Ins.weapon[weaponIndex].weaponExtraRange;
+        attackRange.gameObject.transform.localScale += new Vector3(extraRange, extraRange, extraRange);
+        CharacterPropertie.Ins.currentAttackRangeScale = attackRange.gameObject.transform.localScale.x;
     }
     public void StartCoroutineAttack()
     {
@@ -103,10 +118,8 @@ public class Character : GameUnit
     {
         Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
         Weapon weaponBulletUnit = SimplePool.Spawn<Weapon>(weaponBullet,TF.position, rotation);
+        weaponBulletUnit.OnInit(this);
         weaponBulletUnit.SetDir(dir);
-        weaponBulletUnit.owner = this;
-        weaponBulletUnit.TF.localScale += new Vector3(exp,exp,exp);
-        weaponBulletUnit.isHasFire = true;
     }
 
     public void RotationToTarget()
@@ -133,18 +146,18 @@ public class Character : GameUnit
         joystick = GameManager.Ins.joystick;
         targetRing.OnInit();
         IsDead = false;
-        //curretStage = LevelManager.Ins.stage;
+        TF.localScale = Vector3.one;
+        CharacterPropertie.Ins.currentScale = TF.localScale.x;
         exp = 1;
     }
     public override void OnDespawn()
     {
         SimplePool.Despawn(this);
+        m_TargetsInRange.Clear();
     }
-    public virtual void OnHit()
+    public virtual void OnHit(Character attacker)
     {
         IsDead = true;
-        //ChangeAnim(ConstString.ANIM_DEAD);
-        //OnDespawn();
     }
     public void OnSelect()
     {
@@ -153,13 +166,28 @@ public class Character : GameUnit
     public void OnDeSelect()
     {
         IsFire = false;
-        TargetsInRange.Remove(currentTarget);
+        m_TargetsInRange.Remove(currentTarget);
         targetRing.DisableRing();
     }
     public void IncreaseExp(float expEnemy)
     {
         exp += expEnemy;
-        TF.localScale = TF.localScale + new Vector3(expEnemy * 0.05f, expEnemy * 0.05f, expEnemy * 0.05f);
+        TF.localScale += new Vector3(expEnemy * 0.05f, expEnemy * 0.05f, expEnemy * 0.05f);
+        CharacterPropertie.Ins.currentScale = TF.localScale.x;
+        CharacterPropertie.Ins.currentAttackRangeScale = attackRange.gameObject.transform.localScale.x;
+        //CurrentScale();
+    }
+    public void OnBoost()
+    {
+        IsBoost = true;
+        TF.localScale = Vector3.one * 1.5f;
+        attackRange.gameObject.transform.localScale *= 1.5f;
+    }
+    public void OnResetPropertie()
+    {
+        IsBoost = false;
+        TF.localScale = CharacterPropertie.Ins.currentScale * Vector3.one;
+        attackRange.gameObject.transform.localScale = CharacterPropertie.Ins.currentAttackRangeScale * Vector3.one;
     }
     public void AddCoin()
     {

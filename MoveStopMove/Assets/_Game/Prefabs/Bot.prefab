@@ -206,7 +206,7 @@ MonoBehaviour:
   rb: {fileID: 2391677207661980473}
   anim: {fileID: 774696860717979726}
   attackRange: {fileID: 2391677207850579499}
-  characterCollider: {fileID: 2391677207559962498}
+  characterCollider: {fileID: 2047832447605356730}
   targetRing: {fileID: 2391677208393641153}
   currentTarget: {fileID: 0}
   spawnPoint: {fileID: 2391677208048761731}
@@ -215,16 +215,16 @@ MonoBehaviour:
   hand: {fileID: 8250543692272562775}
   hair: {fileID: 7670464317449624902}
   pant: {fileID: 8855250143572376640}
-  curretStage: {fileID: 0}
-  TargetsInRange: []
+  currentStage: {fileID: 0}
+  m_TargetsInRange: []
   IsFire: 0
-  isAttackAnimEnd: 0
   IsDead: 0
   delayAttack: 0
   speed: 0
   bodyRenderer: {fileID: 2771428464874457284}
   randomInt: 0
   randomInt2: 0
+  navMeshAgent: {fileID: 2391677207661980476}
 --- !u!1 &2391677207850579493
 GameObject:
   m_ObjectHideFlags: 0

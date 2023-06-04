@@ -11,17 +11,17 @@ public class AttackRange : MonoBehaviour
     internal Transform TF;
     private void OnTriggerEnter(Collider other)
     {
-        Character otherCollider = Cache.GetCharacterInParent(other);
+        CharacterCollider otherCollider = Cache.GetCharacterInParent(other);
         if (other.CompareTag(ConstString.TAG_BOT))
         {
             character.IsFire = true;
-            if (character.TargetsInRange == null||!character.TargetsInRange.Contains(other.transform))
+            if (character.m_TargetsInRange == null||!character.m_TargetsInRange.Contains(other.transform))
             {
-                character.TargetsInRange.Add(other.transform);
+                character.m_TargetsInRange.Add(other.transform);
             }
             character.currentTarget = FindNearestEnemy();
             character.OnSelect();
-            if (otherCollider.IsDead)
+            if (otherCollider.character.IsDead)
             {
                 character.OnDeSelect();
             }
@@ -33,19 +33,15 @@ public class AttackRange : MonoBehaviour
         { 
             character.OnDeSelect();
         }
-        if (other.CompareTag("Weapon"))
-        {
-            other.GetComponent<Weapon>().OnDespawn();
-        }
     }
     public Transform FindNearestEnemy()
     {
-        Transform nearestEnemy = character.TargetsInRange[0];
+        Transform nearestEnemy = character.m_TargetsInRange[0];
         float minDistance = GetDistanceFromTarget(nearestEnemy.position);
 
-        for (int i = 0; i < character.TargetsInRange.Count; i++)
+        for (int i = 0; i < character.m_TargetsInRange.Count; i++)
         {
-            Transform characterInRange = character.TargetsInRange[i];
+            Transform characterInRange = character.m_TargetsInRange[i];
             if (Vector3.Distance(character.TF.position, characterInRange.position) < minDistance)
             {
                 nearestEnemy = characterInRange;
@@ -59,6 +55,6 @@ public class AttackRange : MonoBehaviour
     }
     public float GetAttackRadius()
     {
-        return radius * TF.localScale.x;
+        return radius * gameObject.transform.localScale.x;
     }
 }

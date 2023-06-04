@@ -5,17 +5,18 @@ using UnityEngine;
 
 public static class Cache 
 {
-    static Dictionary<Collider, Character> m_Character = new Dictionary<Collider, Character>();
+    static Dictionary<Collider, CharacterCollider> m_Character = new Dictionary<Collider, CharacterCollider>();
 
-    public static Character GetCharacterInParent(Collider key)
+    public static CharacterCollider GetCharacterInParent(Collider key)
     {
         if (!m_Character.ContainsKey(key))
         {
-            Character character = key.GetComponentInParent<Character>();
+            //TODO: khong duoc dung GetComponentInParent
+            CharacterCollider characterCollider = key.GetComponent<CharacterCollider>();
 
-            if (character != null)
+            if (characterCollider != null)
             {
-                m_Character.Add(key, character);
+                m_Character.Add(key, characterCollider);
             }
             else
             {

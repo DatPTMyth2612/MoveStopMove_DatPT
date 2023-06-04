@@ -24,7 +24,18 @@ public class MissionWaypoint : GameUnit
 
     public override void OnInit()
     {
+    }
+    public void OnInit(Character character)
+    {
         cameraMain = GameManager.Ins.mainCamera;
+        targetFollow = character;
+        targetName.SetText(character.name);
+    }
+    public void SetColor(Color color)
+    {
+        targetName.color = color;
+        imageArrow.color = color;
+        imageInfo.color = color;
     }
     public Vector3 ConvertWPtoCP()
     {

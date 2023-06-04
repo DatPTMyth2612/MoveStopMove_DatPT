@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Stage : GameUnit
+public class Stage : MonoBehaviour
 {
     [SerializeField] internal List<Character> characterInStage = new List<Character>();
     [SerializeField] internal Color[] botColors;
+    public NavMeshData navMeshData;
     public Bot botPrefab;
+    public Transform startPoint;
     private NavMeshHit hit;
     internal int playerAlive;
     internal int maxBot;
@@ -16,8 +18,8 @@ public class Stage : GameUnit
     {
         "Abby",
         "Abbye",
-        "Abigael",
-        "Abigail",
+        "Angela",
+        "Caryln",
         "Cicely",
         "Cicily",
         "Ciel",
@@ -50,32 +52,22 @@ public class Stage : GameUnit
         "Joelly",
         "Joellyn",
     };
-    public override void OnInit()
+    public void OnInit()
     {
         playerAlive = LevelManager.Ins.playerAlive;
         maxBot = LevelManager.Ins.maxBot;
-        Player playerObj = SimplePool.Spawn<Player>(LevelManager.Ins.playerPrefab, new Vector3(0, 1.5f, 0), Quaternion.identity);
-        LevelManager.Ins.player = playerObj;
-        characterInStage.Add(playerObj);
-        playerObj.OnInit();
-        MissionWaypoint waypoint = SimplePool.Spawn<MissionWaypoint>(LevelManager.Ins.waypointPrefab);
-        waypoint.targetFollow = playerObj;
-        waypoint.OnInit();
         characterColorAvaible.AddRange(botColors);
         if (IsCanSpawnBot())
         {
             SpawnBot(maxBot);
         }
+        SpawnGift(4);
     }
 
-    public override void OnDespawn()
-    {
-
-    }
     public Vector3 RandomPointInStage()
     {
         // Get bounds stage
-        Bounds stageBounds = LevelManager.Ins.navMeshSurface.navMeshData.sourceBounds;
+        Bounds stageBounds = navMeshData.sourceBounds;
         // Random x
         float rx = Random.Range(stageBounds.min.x, stageBounds.max.x);
         // Random z
@@ -90,7 +82,7 @@ public class Stage : GameUnit
 
         for (int i = 0; i < numberCharacterInStage; i++)
         {
-            if (!(Vector3.Distance(characterInStage[i].TF.position, hit.position) > 6f))
+            if ((Vector3.Distance(characterInStage[i].TF.position, hit.position) < (6f + characterInStage[i].attackRange.GetAttackRadius())))
             {
                 isInTarget = true;
                 break;
@@ -129,13 +121,18 @@ public class Stage : GameUnit
             bot.currentStage = this;
             bot.OnInit();
             MissionWaypoint waypoint = SimplePool.Spawn<MissionWaypoint>(LevelManager.Ins.waypointPrefab);
-            waypoint.targetFollow = bot;
-            waypoint.targetName.SetText(bot.name.ToString());
-            waypoint.targetName.color = newColor;
-            waypoint.imageInfo.color = newColor;
-            waypoint.imageArrow.color = newColor;
-            waypoint.OnInit();
+            waypoint.OnInit(bot);
+            waypoint.SetColor(newColor);
             bot.wayPoint = waypoint;
+        }
+    }
+    public void SpawnGift(int numberGift)
+    {
+        for(int i =1; i<= numberGift;i++)
+        {
+            Vector3 pointToSpawn = GetPointToSpawn();
+            Gift gift = SimplePool.Spawn<Gift>(PoolType.Gift,pointToSpawn + new Vector3(0,5,0), Quaternion.identity);
+            gift.OnInit();
         }
     }
     public bool IsCanSpawnBot()
@@ -146,7 +143,6 @@ public class Stage : GameUnit
     {
         characterInStage.Remove(characterDie);
         playerAlive--;
-        LevelManager.Ins.SetPlayAliveText(playerAlive);
         if (playerAlive == 1)
         {
             CheckWinStage();
@@ -155,7 +151,6 @@ public class Stage : GameUnit
         {   
             if (IsCanSpawnBot())
             {
-                Debug.Log("Spawn");
                 SpawnBot(1);
             }
         }
@@ -169,6 +164,8 @@ public class Stage : GameUnit
             {
                 Debug.Log("win");
                 //TO DO ins ui win
+                UIManager.Ins.OpenUI<Win>();
+                GameManager.Ins.IsState(GameState.Pause);
             }
         }
     }

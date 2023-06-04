@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 public class Player : Character
@@ -19,17 +20,17 @@ public class Player : Character
 
     public override void OnInit()
     {
-        base.OnInit();   
+        base.OnInit();
     }
 
     private void Start()
     {
+        attackRangeDefault = attackRange.gameObject.transform.localScale;
         currentWeaponIndex = PlayerPrefs.GetInt("Selected Weapon", 0);
         CreateWeapon(currentWeaponIndex);
-        weaponBullet = WeaponConfig.Ins.weapon[currentWeaponIndex].weapon;
+        EquipWeapon(currentWeaponIndex);
         pant.GetComponent<SkinnedMeshRenderer>().material = SkinShopConfig.Ins.pant[0].pantMaterial;
         hairSkin = Instantiate(SkinShopConfig.Ins.hair[2].hair, hair);
-        Time.timeScale = 0f;
     }
     public void CreateWeapon(int weaponIndex)
     {
@@ -43,9 +44,10 @@ public class Player : Character
             weaponOnHand = Instantiate(WeaponConfig.Ins.weapon[weaponIndex].weaponPrefab, hand);
         }
     }
+    
     void Update()
     {
-        if (joystick != null)
+        if (GameManager.Ins.IsState(GameState.Gameplay) && joystick != null)
         {
             Move(Vector3.forward * joystick.Vertical + Vector3.right * joystick.Horizontal);
         }
@@ -78,15 +80,31 @@ public class Player : Character
         {
             ChangeAnim(ConstString.ANIM_RUN);
         }
-        //if (IsDead)
-        //{
-        //    ChangeAnim(ConstString.ANIM_DEAD);
-        //    countDownDie -= Time.deltaTime;
-        //    if (countDownDie <= 0.1f)
-        //    {
-        //        OnDespawn();
-        //    }
-        //}
+        if (IsDead)
+        {
+            ChangeAnim(ConstString.ANIM_DEAD);
+            rb.velocity = Vector3.zero;
+        }
     }
-    
+    public override void OnHit(Character attacker)
+    {
+        base.OnHit(attacker);
+        wayPoint.OnDespawn();
+        ParticlePool.Play(LevelManager.Ins.bloodExplosion, new Vector3(TF.position.x, TF.position.y, TF.position.z), Quaternion.identity);
+        currentStage.OnCharacterDie(this);
+        waitAfterDeathCoroutine = StartCoroutine(WaitAnimEnd(
+                countDownDie,
+                () =>
+                {
+                    ParticlePool.Play(LevelManager.Ins.deathParticle, new Vector3(TF.position.x, 2f, TF.position.z), Quaternion.Euler(0f, 180f, 0f));
+                    StopCoroutine(waitAfterDeathCoroutine);
+                    OnDespawn();
+                }
+            )
+        );
+        UIManager.Ins.CloseUI<Gameplay>();
+        UIManager.Ins.OpenUI<Lose>().SetText(attacker);
+        GameManager.Ins.ChangeState(GameState.Pause);
+        GameManager.Ins.inGame.gameObject.SetActive(false);
+    }
 }

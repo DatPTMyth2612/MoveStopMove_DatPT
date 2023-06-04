@@ -7,6 +7,6 @@ public class Hammer : Weapon
     public override void Move()
     {
         base.Move();
-        rb.AddTorque(dirToTarget * 5f);
+        transform.eulerAngles += Vector3.up * speedRotation * Time.deltaTime;
     }
 }

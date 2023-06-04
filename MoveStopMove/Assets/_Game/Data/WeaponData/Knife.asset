@@ -17,6 +17,8 @@ MonoBehaviour:
   weaponPrefab: {fileID: 526655615588485270, guid: 1b10769c457436b44aca6dc85fe13958, type: 3}
   weapon: {fileID: 5115372433549116705, guid: a1016b9fc1cb2b34f8f1b9deb3524c1f, type: 3}
   weaponName: Knife
-  weaponDescription: + attack speed
+  weaponDescription: + 20% attack speed
+  weaponSpeed: 1.2
+  weaponExtraRange: 0
   priceWeapon: 0
   isUnlocked: 1

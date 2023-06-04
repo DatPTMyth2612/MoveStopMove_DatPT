@@ -18,5 +18,7 @@ MonoBehaviour:
   weapon: {fileID: -4409395017859880519, guid: 7dc2ba274abc9c24ea238f40da0b4f9f, type: 3}
   weaponName: Hammer
   weaponDescription: + attack speed
+  weaponSpeed: 1
+  weaponExtraRange: 0
   priceWeapon: 250
-  isUnlocked: 0
+  isUnlocked: 1

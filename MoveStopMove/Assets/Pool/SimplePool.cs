@@ -331,4 +331,5 @@ public enum PoolType
     Knife_Bullet,
     Hammer_Bullet,
     Arrow_Bullet,
+    Gift
 }

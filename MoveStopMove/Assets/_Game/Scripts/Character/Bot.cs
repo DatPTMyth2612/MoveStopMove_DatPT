@@ -5,34 +5,42 @@ using UnityEngine.AI;
 
 public class Bot : Character
 {
-    [SerializeField] internal SkinnedMeshRenderer bodyRenderer;
     internal Color currentColor;
-    internal MissionWaypoint wayPoint;
+    
     public int randomInt;
     public int randomInt2;
 
     IState<Bot> currentState;
+
+    public static BotIdleState idle = new BotIdleState();
+    public static BotIdleState move = new BotIdleState();
+    public static BotIdleState attack = new BotIdleState();
+
     public BotIdleState botIdleState = new BotIdleState();
     public BotMoveState botMoveState = new BotMoveState();
     public BotAttackState botAttackState = new BotAttackState();
     public BotDieState botDieState = new BotDieState();
-    internal NavMeshAgent navMeshAgent;
+    public NavMeshAgent navMeshAgent;
     
     public override void OnInit()
     {
         base.OnInit();
-        navMeshAgent = GetComponent<NavMeshAgent>();
-    }
-    private void Start()
-    {
         randomInt = Random.Range(0, 3);
         randomInt2 = Random.Range(0, 3);
         weaponBullet = WeaponConfig.Ins.weapon[randomInt].weapon;
         pant.GetComponent<SkinnedMeshRenderer>().material = SkinShopConfig.Ins.pant[randomInt2].pantMaterial;
         hairSkin = Instantiate(SkinShopConfig.Ins.hair[randomInt2].hair, hair);
         weaponOnHand = Instantiate(WeaponConfig.Ins.weapon[randomInt].weaponPrefab, hand);
+        EquipWeapon(randomInt);
         currentState = botIdleState;
         currentState.OnEnter(this);
+    }
+    public override void OnDespawn()
+    {
+        base.OnDespawn();
+    }
+    private void Start()
+    {
         //Time.timeScale = 0f;
     }
     // Update is called once per frame
@@ -42,7 +50,10 @@ public class Bot : Character
         {
             delayAttack -= Time.deltaTime;
         }
-        currentState.OnExecute(this);
+        if(GameManager.Ins.IsState(GameState.Gameplay) && currentState !=null)
+        {
+            currentState.OnExecute(this);
+        }
     }
     public void ChangeState(IState<Bot> newState)
     {
@@ -50,11 +61,23 @@ public class Bot : Character
         currentState = newState;
         currentState.OnEnter(this);
     }
-    public override void OnHit()
+    public override void OnHit(Character attacker)
     {
-        base.OnHit();
+        base.OnHit(attacker);
         wayPoint.OnDespawn();
         ChangeState(botDieState);
+        ParticlePool.Play(LevelManager.Ins.bloodExplosion,new Vector3(TF.position.x, TF.position.y, TF.position.z), Quaternion.identity);
+        ChangeAnim(ConstString.ANIM_DEAD);
+        waitAfterDeathCoroutine = StartCoroutine( WaitAnimEnd(
+                countDownDie,
+                () =>
+                {
+                    ParticlePool.Play(LevelManager.Ins.deathParticle, new Vector3(TF.position.x, 2f, TF.position.z),Quaternion.Euler(0f, 180f, 0f));
+                    StopCoroutine(waitAfterDeathCoroutine);
+                    OnDespawn();
+                }
+            )
+        );
         currentStage.characterColorAvaible.Add(currentColor);
         currentStage.OnCharacterDie(this);
     }

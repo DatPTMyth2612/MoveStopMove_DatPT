@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Win : MonoBehaviour
+public class Win : UICanvas
 {
-    // Start is called before the first frame update
-    void Start()
+    public void NextLevelButton()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    }
+    public void HomeButton()
     {
-        
+
     }
 }

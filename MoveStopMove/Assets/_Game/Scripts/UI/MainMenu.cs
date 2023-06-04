@@ -4,38 +4,31 @@ using UnityEngine;
 
 public class MainMenu : UICanvas
 {
-    [SerializeField] private GameObject gamePlay;
-    [SerializeField] private GameObject weaponShop;
-    [SerializeField] private GameObject skinShop;
+    //[SerializeField] private GameObject skinShop;
     private void Start()
     {
         LevelManager.Ins.SetCoinText();
-        gamePlay.SetActive(false);
-        weaponShop.SetActive(false);
-        skinShop.SetActive(false);
+        GameManager.Ins.cameraFollow.SetUpCameraMainMenu();
+        //skinShop.SetActive(false);
     }
     public void PlayButton()
     {
-        Time.timeScale = 1f;
-        gamePlay.SetActive(true);
-        weaponShop.SetActive(false);
-        skinShop.SetActive(false);
+        GameManager.Ins.ChangeState(GameState.Gameplay);
+        //skinShop.SetActive(false);
+        UIManager.Ins.OpenUI<Gameplay>();
+        GameManager.Ins.inGame.gameObject.SetActive(true);
         Close(0);  
     }
     public void WeaponButton() 
     {
-        //UIManager.Ins.OpenUI<WeaponShopUI>();
-        gamePlay.SetActive(false);
-        weaponShop.SetActive(true);
-        skinShop.SetActive(false);
+        UIManager.Ins.OpenUI<WeaponShopUI>();
+        //skinShop.SetActive(false);
         Close(0);
     }
     public void SkinButton()
     {
         //UIManager.Ins.OpenUI<SkinShopUI>();
-        gamePlay.SetActive(false);
-        weaponShop.SetActive(false);
-        skinShop.SetActive(true);
+        //skinShop.SetActive(true);
         Close(0);
     }
 }

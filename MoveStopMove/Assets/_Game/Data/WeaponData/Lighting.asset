@@ -18,5 +18,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   weaponName: Linghting
   weaponDescription: + attack speed
+  weaponSpeed: 0
+  weaponExtraRange: 1.25
   priceWeapon: 300
   isUnlocked: 0

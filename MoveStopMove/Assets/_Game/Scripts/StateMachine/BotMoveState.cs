@@ -15,8 +15,8 @@ public class BotMoveState : IState<Bot>
     {
         if (bot.IsFire)
         {
+            //bot.ChangeState(bot.botAttackState);
             bot.navMeshAgent.SetDestination(bot.TF.position);
-            bot.ChangeState(bot.botAttackState);
         }
         if (bot.navMeshAgent.remainingDistance <= 0.1f)
         {

@@ -20,6 +20,11 @@ public class BotIdleState : IState<Bot>
         {
             bot.ChangeState(bot.botMoveState);
         }
+        if (bot.IsFire)
+        {
+            bot.ChangeState(bot.botAttackState);
+           // bot.navMeshAgent.SetDestination(bot.TF.position);
+        }
     }
     public void OnExit(Bot bot)
     {

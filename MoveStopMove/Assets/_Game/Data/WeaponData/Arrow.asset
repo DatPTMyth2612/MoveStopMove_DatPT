@@ -17,6 +17,8 @@ MonoBehaviour:
   weaponPrefab: {fileID: 397752692893344577, guid: bd7118f21d1e6fb49ae4f28d67e83722, type: 3}
   weapon: {fileID: -6849551389976025209, guid: 8bf4a759623b7a84d832c09de61bc298, type: 3}
   weaponName: Arrow
-  weaponDescription: + attack speed
+  weaponDescription: + 50% attack speed
+  weaponSpeed: 1.5
+  weaponExtraRange: 0
   priceWeapon: 120
-  isUnlocked: 0
+  isUnlocked: 1

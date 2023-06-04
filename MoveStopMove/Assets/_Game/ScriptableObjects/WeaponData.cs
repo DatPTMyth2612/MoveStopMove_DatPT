@@ -11,6 +11,7 @@ public class WeaponData : ScriptableObject
     public Weapon weapon;
     public string weaponName;
     public string weaponDescription;
+    public float weaponSpeed;
+    public float weaponExtraRange;
     public int priceWeapon;
-    public bool isUnlocked;
 }
