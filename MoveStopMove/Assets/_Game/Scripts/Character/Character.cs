@@ -67,7 +67,7 @@ public class Character : GameUnit
         SpawnWeaponBullet(dir);
         StartCoroutineAttack();
         if (!IsBoost) return;         
-        OnResetPropertie();
+        OnResetPropertie(exp);
     }
     public void EquipWeapon(int weaponIndex)
     {
@@ -75,7 +75,6 @@ public class Character : GameUnit
         weaponBullet.speed = WeaponConfig.Ins.weapon[weaponIndex].weaponSpeed;
         float extraRange = WeaponConfig.Ins.weapon[weaponIndex].weaponExtraRange;
         attackRange.gameObject.transform.localScale += new Vector3(extraRange, extraRange, extraRange);
-        CharacterPropertie.Ins.currentAttackRangeScale = attackRange.gameObject.transform.localScale.x;
     }
     public void StartCoroutineAttack()
     {
@@ -120,6 +119,7 @@ public class Character : GameUnit
         Weapon weaponBulletUnit = SimplePool.Spawn<Weapon>(weaponBullet,TF.position, rotation);
         weaponBulletUnit.OnInit(this);
         weaponBulletUnit.SetDir(dir);
+        SoundManager.Ins.PlaySound(SoundManager.Ins.attackAudioClip);
     }
 
     public void RotationToTarget()
@@ -146,9 +146,10 @@ public class Character : GameUnit
         joystick = GameManager.Ins.joystick;
         targetRing.OnInit();
         IsDead = false;
+        IsFire = false;
         TF.localScale = Vector3.one;
-        CharacterPropertie.Ins.currentScale = TF.localScale.x;
         exp = 1;
+        m_TargetsInRange.Clear();   
     }
     public override void OnDespawn()
     {
@@ -173,21 +174,17 @@ public class Character : GameUnit
     {
         exp += expEnemy;
         TF.localScale += new Vector3(expEnemy * 0.05f, expEnemy * 0.05f, expEnemy * 0.05f);
-        CharacterPropertie.Ins.currentScale = TF.localScale.x;
-        CharacterPropertie.Ins.currentAttackRangeScale = attackRange.gameObject.transform.localScale.x;
-        //CurrentScale();
+        SoundManager.Ins.PlaySound(SoundManager.Ins.levelUpAudioClip);
     }
     public void OnBoost()
     {
         IsBoost = true;
         TF.localScale = Vector3.one * 1.5f;
-        attackRange.gameObject.transform.localScale *= 1.5f;
     }
-    public void OnResetPropertie()
+    public void OnResetPropertie(float expM)
     {
         IsBoost = false;
-        TF.localScale = CharacterPropertie.Ins.currentScale * Vector3.one;
-        attackRange.gameObject.transform.localScale = CharacterPropertie.Ins.currentAttackRangeScale * Vector3.one;
+        TF.localScale = 0.05f * expM * Vector3.one + Vector3.one;  
     }
     public void AddCoin()
     {

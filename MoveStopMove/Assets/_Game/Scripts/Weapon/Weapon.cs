@@ -23,7 +23,7 @@ public class Weapon : GameUnit
     public virtual void Move()
     {
         rb.velocity = dirToTarget * 4f * speed;
-        if(Vector3.Distance(transform.position, startPos) >= maxDistance) 
+        if(Vector3.Distance(transform.position, startPos) >= maxDistance&&!owner.IsBoost) 
         {
             OnDespawn();
         }
