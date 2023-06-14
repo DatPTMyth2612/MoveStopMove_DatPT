@@ -1556,7 +1556,7 @@ MonoBehaviour:
   waypointPrefab: {fileID: 2176794970978654461, guid: aee005a38bb960b4dbfdedbd225ce192, type: 3}
   navMeshSurface: {fileID: 535927655}
   playerAlive: 30
-  maxBot: 10
+  maxBot: 9
   coinText: {fileID: 829022716}
   playerPrefab: {fileID: 6813827425356300036, guid: ddc367068c4fdef48881b2961124e958, type: 3}
   bloodExplosion: {fileID: 198138027695693824, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
